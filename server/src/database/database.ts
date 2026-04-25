@@ -3,15 +3,16 @@ import fs from "fs";
 import path from "path";
 
 const dataDir = path.resolve(process.cwd(), "data");
+
 if (!fs.existsSync(dataDir)) {
   fs.mkdirSync(dataDir);
 }
 
 const dbPath = path.resolve(dataDir, "flashflow.db");
 
-export const db = new Database(dbPath);
+let database: Database.Database;
 
-function initializeSchema() {
+function initializeSchema(db: Database.Database) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS flashcards (
       id TEXT PRIMARY KEY,
@@ -23,6 +24,11 @@ function initializeSchema() {
   `);
 }
 
-export function initializeDatabase() {
-  initializeSchema();
+export function getDatabase(): Database.Database {
+  if (!database) {
+    database = new Database(dbPath);
+    initializeSchema(database);
+  }
+
+  return database;
 }
