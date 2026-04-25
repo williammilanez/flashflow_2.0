@@ -1,7 +1,12 @@
 import { Router } from "express";
+import { FlashcardController } from "../controller/flashcard.controller";
 
-export const flashcardRoutes = Router();
+const flashcardRoutes = Router();
+const controller = new FlashcardController();
 
-flashcardRoutes.get("/", (req, res) => {
-  return res.json({ status: "ok" });
-});
+flashcardRoutes.post("/", controller.create);
+flashcardRoutes.get("/", controller.list);
+flashcardRoutes.put("/:id", controller.update);
+flashcardRoutes.delete("/:id", controller.delete);
+
+export { flashcardRoutes };
