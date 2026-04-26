@@ -1,5 +1,8 @@
 export const FLASHCARD_CATEGORIES = [
   "JavaScript",
-  "React",
-  "Tailwind CSS",
+  "TypeScript",
+  "Node",
+  "SQL",
 ] as const;
+
+export type FlashcardCategory = (typeof FLASHCARD_CATEGORIES)[number];

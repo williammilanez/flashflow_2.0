@@ -1,55 +1,26 @@
 import { randomUUID } from "crypto";
 import { AppError } from "../../../shared/errors/app-error";
-import { FLASHCARD_CATEGORIES } from "../constants/categories";
 import { FlashcardRepository } from "../repository/flashcard.repository";
-import { Flashcard, FlashcardCategory } from "../types/flashcard.types";
-
-interface CreateFlashcardDTO {
-  question: string;
-  answer: string;
-  category: string;
-}
-
-interface UpdateFlashcardDTO {
-  id: string;
-  question: string;
-  answer: string;
-  category: string;
-}
+import { createFlashcardSchema } from "../schemas/flashcard.schema";
+import { Flashcard } from "../types/flashcard.types";
 
 export class FlashcardService {
   private repository = new FlashcardRepository();
 
-  private validateCategory(
-    category: string,
-  ): asserts category is FlashcardCategory {
-    if (!FLASHCARD_CATEGORIES.includes(category as FlashcardCategory)) {
-      throw new AppError("Invalid category");
-    }
-  }
+  createFlashcard(data: unknown): Flashcard {
+    const parsed = createFlashcardSchema.safeParse(data);
 
-  private validateRequiredFields(question: string, answer: string) {
-    if (!question?.trim()) {
-      throw new AppError("Question is required");
+    if (!parsed.success) {
+      const issue = parsed.error.issues[0];
+      throw new AppError(issue.message, 400);
     }
 
-    if (!answer?.trim()) {
-      throw new AppError("Answer is required");
-    }
-  }
-
-  createFlashcard({
-    question,
-    answer,
-    category,
-  }: CreateFlashcardDTO): Flashcard {
-    this.validateRequiredFields(question, answer);
-    this.validateCategory(category);
+    const { question, answer, category } = parsed.data;
 
     const flashcard: Flashcard = {
       id: randomUUID(),
-      question: question.trim(),
-      answer: answer.trim(),
+      question,
+      answer,
       category,
       created_at: new Date().toISOString(),
     };
@@ -63,26 +34,22 @@ export class FlashcardService {
     return this.repository.findAll();
   }
 
-  updateFlashcard({
-    id,
-    question,
-    answer,
-    category,
-  }: UpdateFlashcardDTO): Flashcard {
-    const existing = this.repository.findById(id);
+  updateFlashcard(data: any): Flashcard {
+    const existing = this.repository.findById(data.id);
 
     if (!existing) {
       throw new AppError("Flashcard not found", 404);
     }
 
-    this.validateRequiredFields(question, answer);
-    this.validateCategory(category);
+    const parsed = createFlashcardSchema.safeParse(data);
+
+    if (!parsed.success) {
+      throw new AppError(parsed.error.issues[0].message, 400);
+    }
 
     const updated: Flashcard = {
       ...existing,
-      question: question.trim(),
-      answer: answer.trim(),
-      category,
+      ...parsed.data,
     };
 
     this.repository.update(updated);

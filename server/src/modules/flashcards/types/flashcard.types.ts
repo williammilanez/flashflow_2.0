@@ -1,4 +1,4 @@
-export type FlashcardCategory = "JavaScript" | "React" | "Tailwind CSS";
+import { FlashcardCategory } from "../constants/categories";
 
 export interface Flashcard {
   id: string;
