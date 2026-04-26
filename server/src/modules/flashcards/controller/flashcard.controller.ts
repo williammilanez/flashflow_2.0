@@ -1,46 +1,34 @@
 import { Request, Response } from "express";
+import { successResponse } from "../../../shared/utils/http-response";
 import { FlashcardService } from "../service/flashcard.service";
 
 export class FlashcardController {
   private service = new FlashcardService();
 
-  create = (req: Request, res: Response): Response => {
-    const { question, answer, category } = req.body;
+  create(req: Request, res: Response) {
+    const result = this.service.createFlashcard(req.body);
 
-    const flashcard = this.service.createFlashcard({
-      question,
-      answer,
-      category,
+    return res.status(201).json(successResponse(result, "FLASHCARD_CREATED"));
+  }
+
+  list(req: Request, res: Response) {
+    const result = this.service.listFlashcards();
+
+    return res.status(200).json(successResponse(result, "FLASHCARD_LIST"));
+  }
+
+  update(req: Request, res: Response) {
+    const result = this.service.updateFlashcard({
+      id: req.params.id,
+      ...req.body,
     });
 
-    return res.status(201).json(flashcard);
-  };
+    return res.status(200).json(successResponse(result, "FLASHCARD_UPDATED"));
+  }
 
-  list = (_req: Request, res: Response): Response => {
-    const flashcards = this.service.listFlashcards();
+  delete(req: Request, res: Response) {
+    this.service.deleteFlashcard(req.params.id);
 
-    return res.json(flashcards);
-  };
-
-  update = (req: Request, res: Response): Response => {
-    const { id } = req.params;
-    const { question, answer, category } = req.body;
-
-    const updated = this.service.updateFlashcard({
-      id,
-      question,
-      answer,
-      category,
-    });
-
-    return res.json(updated);
-  };
-
-  delete = (req: Request, res: Response): Response => {
-    const { id } = req.params;
-
-    this.service.deleteFlashcard(id);
-
-    return res.status(204).send();
-  };
+    return res.status(200).json(successResponse(null, "FLASHCARD_DELETED"));
+  }
 }
