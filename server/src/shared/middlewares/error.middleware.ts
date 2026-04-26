@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors/app-error";
+import { ERROR_CODES } from "../errors/error-codes";
 
 export function errorMiddleware(
   err: unknown,
@@ -7,19 +8,17 @@ export function errorMiddleware(
   res: Response,
   next: NextFunction,
 ) {
-  // Caso erro controlado da aplicação
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
-      error: err.message,
+      error: err.code,
       statusCode: err.statusCode,
     });
   }
 
-  // Erro inesperado (fallback)
   console.error("[UNEXPECTED ERROR]", err);
 
   return res.status(500).json({
-    error: "INTERNAL_SERVER_ERROR",
+    error: ERROR_CODES.INTERNAL_SERVER_ERROR,
     statusCode: 500,
   });
 }
