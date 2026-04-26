@@ -25,7 +25,7 @@ export class FlashcardService {
       id: randomUUID(),
       question,
       answer,
-      category,
+      category: category as Flashcard["category"],
       created_at: new Date().toISOString(),
     };
 
@@ -38,13 +38,7 @@ export class FlashcardService {
     return this.repository.findAll();
   }
 
-  updateFlashcard(data: any): Flashcard {
-    const existing = this.repository.findById(data.id);
-
-    if (!existing) {
-      throw new AppError(ERROR_CODES.FLASHCARD_NOT_FOUND, 404);
-    }
-
+  updateFlashcard(data: unknown): Flashcard {
     const parsed = updateFlashcardSchema.safeParse(data);
 
     if (!parsed.success) {
@@ -52,9 +46,18 @@ export class FlashcardService {
       throw new AppError(issue.message as ErrorCode, 400);
     }
 
+    const { id } = parsed.data;
+
+    const existing = this.repository.findById(id);
+
+    if (!existing) {
+      throw new AppError(ERROR_CODES.FLASHCARD_NOT_FOUND, 404);
+    }
+
     const updated: Flashcard = {
       ...existing,
       ...parsed.data,
+      category: parsed.data.category as Flashcard["category"],
     };
 
     this.repository.update(updated);

@@ -13,15 +13,17 @@ const dbPath = path.resolve(dataDir, "flashflow.db");
 let database: Database.Database;
 
 function initializeSchema(db: Database.Database) {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS flashcards (
-      id TEXT PRIMARY KEY,
-      question TEXT NOT NULL,
-      answer TEXT NOT NULL,
-      category TEXT NOT NULL,
-      created_at TEXT NOT NULL
-    );
-  `);
+  db.prepare(
+    `
+  CREATE TABLE IF NOT EXISTS flashcards (
+    id TEXT PRIMARY KEY,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    category TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  )
+`,
+  ).run();
 }
 
 export function getDatabase(): Database.Database {
