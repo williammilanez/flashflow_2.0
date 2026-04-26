@@ -6,13 +6,17 @@ export const app = express();
 
 app.use(express.json());
 
-// Health check (antes dos middlewares de erro)
 app.get("/health", (req, res) => {
   return res.json({ status: "ok" });
 });
 
-// Rotas de domínio
 app.use("/flashcards", flashcardRoutes);
 
-// Middleware de erro (SEMPRE por último)
+app.use((req, res) => {
+  res.status(404).json({
+    error: "ROUTE_NOT_FOUND",
+    statusCode: 404,
+  });
+});
+
 app.use(errorMiddleware);
