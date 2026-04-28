@@ -1,5 +1,7 @@
+import { Home } from "./pages/Home";
+
 function App() {
-  return <h1>FlashFlow 2.0</h1>;
+  return <Home />;
 }
 
 export default App;
