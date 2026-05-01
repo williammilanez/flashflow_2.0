@@ -1,8 +1,11 @@
+import cors from "cors";
 import express from "express";
 import { flashcardRoutes } from "./modules/flashcards/routes/flashcard.routes";
 import { errorMiddleware } from "./shared/middlewares/error.middleware";
 
 export const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 
