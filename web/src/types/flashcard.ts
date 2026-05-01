@@ -5,7 +5,7 @@ export interface Flashcard {
   question: string;
   answer: string;
   category: FlashcardCategory;
-  created_at: string;
+  created_at: string; // ISO 8601 date string
 }
 
 export interface CreateFlashcardDTO {
