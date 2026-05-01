@@ -1,3 +1,5 @@
+import type { ApiError, ApiResponse } from "../types/api";
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 if (!API_URL) {
@@ -23,13 +25,21 @@ export async function apiFetch<T>(
   }
 
   if (!response.ok) {
-    const errorMessage =
-      typeof data === "object" && data !== null && "error" in data
-        ? (data as { error: string }).error
-        : "API error";
+    const error: ApiError =
+      typeof data === "object" && data !== null
+        ? (data as ApiError)
+        : {
+            error: "API error",
+            statusCode: response.status,
+          };
 
-    throw new Error(`${response.status} - ${errorMessage}`);
+    throw error;
   }
 
-  return (data as { data: T })?.data;
+  if (!data) {
+    return undefined as unknown as T;
+  }
+
+  const result = data as ApiResponse<T>;
+  return result.data;
 }
