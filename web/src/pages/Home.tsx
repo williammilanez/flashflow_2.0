@@ -1,8 +1,29 @@
 import { CategoryFilter } from "../components/CategoryFilter/CategoryFilter";
-import { Flashcard } from "../components/Flashcard/Flashcard";
+import { FlashcardGrid } from "../components/FlashcardGrid/FlashcardGrid";
 import { Header } from "../components/Header/Header";
 
 export function Home() {
+  const flashcards = [
+    {
+      id: "1",
+      category: "React",
+      question: "O que é React?",
+      answer: "Uma biblioteca JavaScript para interfaces.",
+    },
+    {
+      id: "2",
+      category: "Node.js",
+      question: "O que é Node.js?",
+      answer: "Um runtime JavaScript baseado no motor V8.",
+    },
+    {
+      id: "3",
+      category: "JavaScript",
+      question: "O que é closure?",
+      answer: "Função com acesso ao escopo léxico externo.",
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Header />
@@ -22,15 +43,7 @@ export function Home() {
           <CategoryFilter />
         </section>
 
-        <section>
-          <div className="mt-12 max-w-md">
-            <Flashcard
-              category="React"
-              question="O que é React?"
-              answer="Uma biblioteca JavaScript para construção de interfaces."
-            />
-          </div>
-        </section>
+        <FlashcardGrid flashcards={flashcards} />
       </main>
     </div>
   );
