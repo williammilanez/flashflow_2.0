@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         manrope: ["Manrope", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
       },
     },
   },

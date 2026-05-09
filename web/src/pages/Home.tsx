@@ -1,9 +1,21 @@
 import { Header } from "../components/Header/Header";
+
 export function Home() {
   return (
-    <>
-      {" "}
-      <Header />{" "}
-    </>
+    <div className="min-h-screen bg-slate-50">
+      <Header />
+
+      <main className="max-w-7xl mx-auto px-6 py-12">
+        <section className="flex flex-col gap-3">
+          <p className="font-inter text-xs font-bold text-violet-700">
+            Painel de Aprendizado
+          </p>
+
+          <h2 className="font-manrope text-4xl font-extrabold text-slate-800">
+            Domine tecnologia com foco total.
+          </h2>
+        </section>
+      </main>
+    </div>
   );
 }
