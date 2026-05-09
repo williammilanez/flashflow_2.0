@@ -1,5 +1,5 @@
 import { CategoryFilter } from "../components/CategoryFilter/CategoryFilter";
-import { EmptyState } from "../components/EmptyState/EmptyState";
+import { CreateCardButton } from "../components/CreateCardButton/CreateCardButton";
 import { Header } from "../components/Header/Header";
 
 export function Home() {
@@ -22,7 +22,9 @@ export function Home() {
           <CategoryFilter />
         </section>
 
-        <EmptyState />
+        <section className="mt-12 max-w-sm">
+          <CreateCardButton />
+        </section>
       </main>
     </div>
   );
