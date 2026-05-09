@@ -1,4 +1,5 @@
 import { CategoryFilter } from "../components/CategoryFilter/CategoryFilter";
+import { Flashcard } from "../components/Flashcard/Flashcard";
 import { Header } from "../components/Header/Header";
 
 export function Home() {
@@ -19,6 +20,16 @@ export function Home() {
           </div>
 
           <CategoryFilter />
+        </section>
+
+        <section>
+          <div className="mt-12 max-w-md">
+            <Flashcard
+              category="React"
+              question="O que é React?"
+              answer="Uma biblioteca JavaScript para construção de interfaces."
+            />
+          </div>
         </section>
       </main>
     </div>

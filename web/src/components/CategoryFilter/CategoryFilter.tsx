@@ -13,7 +13,7 @@ export function CategoryFilter() {
               px-5 py-2 rounded-full text-sm font-semibold transition
               ${
                 isActive
-                  ? "font-semibold bg-violet-100 text-violet-700 border hover:bg-violet-200"
+                  ? "font-semibold bg-violet-100 text-violet-700 border border-slate-200 hover:bg-violet-200"
                   : "font-medium bg-slate-50 text-slate-800 hover:bg-violet-200"
               }
             `}
