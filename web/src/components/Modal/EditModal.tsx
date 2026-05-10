@@ -1,12 +1,15 @@
-type CreateModalProps = {
-  isOpen?: boolean;
-  onClose?: () => void;
+import type { Flashcard } from "../../types/flashcard";
+
+type EditModalProps = {
+  flashcard: Flashcard | null;
+
+  onClose: () => void;
 };
 
 const categories = ["JavaScript", "React", "Tailwind CSS", "Node.js"];
 
-export function EditModal({ isOpen = false, onClose }: CreateModalProps) {
-  if (!isOpen) {
+export function EditModal({ flashcard, onClose }: EditModalProps) {
+  if (!flashcard) {
     return null;
   }
 

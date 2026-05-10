@@ -1,12 +1,21 @@
 import { useState } from "react";
 
 type FlashcardProps = {
+  id: string;
   category: string;
   question: string;
   answer: string;
+  onEdit: () => void;
+  onDelete: () => void;
 };
 
-export function Flashcard({ category, question, answer }: FlashcardProps) {
+export function Flashcard({
+  category,
+  question,
+  answer,
+  onEdit,
+  onDelete,
+}: FlashcardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   function handleFlipCard() {
@@ -14,21 +23,7 @@ export function Flashcard({ category, question, answer }: FlashcardProps) {
   }
 
   return (
-    <article
-      className="
-        w-full
-        min-h-[320px]
-        rounded-3xl
-        border
-        border-slate-200
-        bg-white
-        p-6
-        shadow-sm
-        flex
-        flex-col
-        justify-between
-      "
-    >
+    <article className="w-full min-h-[320px] rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col justify-between">
       {!isFlipped ? (
         <>
           <header className="font-inter flex items-start justify-between">
@@ -61,7 +56,7 @@ export function Flashcard({ category, question, answer }: FlashcardProps) {
             </span>
 
             <div className="flex items-center gap-2">
-              <button>
+              <button type="button" onClick={onEdit}>
                 <img
                   src="/Button-edit.svg"
                   alt="Editar flashcard"
@@ -69,7 +64,7 @@ export function Flashcard({ category, question, answer }: FlashcardProps) {
                 />
               </button>
 
-              <button>
+              <button type="button" onClick={onDelete}>
                 <img
                   src="/Button-del.svg"
                   alt="Deletar flashcard"

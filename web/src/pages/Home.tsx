@@ -1,42 +1,51 @@
+import { useEffect, useState } from "react";
+
 import { CategoryFilter } from "../components/CategoryFilter/CategoryFilter";
 import { CreateCardButton } from "../components/CreateCardButton/CreateCardButton";
 import { EmptyState } from "../components/EmptyState/EmptyState";
 import { FlashcardGrid } from "../components/FlashcardGrid/FlashcardGrid";
 import { Header } from "../components/Header/Header";
 
+import { CreateModal } from "../components/Modal/CreateModal";
+import { DeleteModal } from "../components/Modal/DeleteModal";
+import { EditModal } from "../components/Modal/EditModal";
+
+import { flashcardService } from "../services/flashcard.service";
+
+import type { Flashcard } from "../types/flashcard";
+
 export function Home() {
-  const flashcards = [
-    {
-      id: "1",
-      category: "React",
-      question: "O que é React?",
-      answer: "Uma biblioteca JavaScript para interfaces.",
-    },
-    {
-      id: "2",
-      category: "Node.js",
-      question: "O que é Node.js?",
-      answer: "Um runtime JavaScript baseado no motor V8.",
-    },
-    {
-      id: "3",
-      category: "JavaScript",
-      question: "O que é closure?",
-      answer: "Função com acesso ao escopo léxico externo.",
-    },
-    {
-      id: "4",
-      category: "JavaScript",
-      question: "Por que o JavaScript é uma linguagem de programação?",
-      answer: "Porque ele processa lógica e dados dinamicamente.",
-    },
-    {
-      id: "5",
-      category: "Tailwind CSS",
-      question: "Qual a principal utilidade do Tailwind CSS?",
-      answer: "Estilização rápida via classes utilitárias.",
-    },
-  ];
+  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+
+  const [selectedCategory, setSelectedCategory] = useState("Tudo");
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(
+    null,
+  );
+
+  const [deletingFlashcard, setDeletingFlashcard] = useState<Flashcard | null>(
+    null,
+  );
+
+  async function loadFlashcards() {
+    try {
+      const data = await flashcardService.getAll();
+
+      setFlashcards(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    async function fetchFlashcards() {
+      await loadFlashcards();
+    }
+
+    fetchFlashcards();
+  }, []);
 
   const hasFlashcards = flashcards.length > 0;
 
@@ -56,28 +65,41 @@ export function Home() {
             </h2>
           </div>
 
-          <CategoryFilter />
+          <CategoryFilter
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
         </section>
 
         {!hasFlashcards ? (
           <EmptyState />
         ) : (
-          <section
-            className="
-              mt-12
-              grid
-              grid-cols-1
-              md:grid-cols-2
-              xl:grid-cols-3
-              gap-6
-            "
-          >
-            <FlashcardGrid flashcards={flashcards} />
+          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <FlashcardGrid
+              flashcards={flashcards}
+              onEdit={setEditingFlashcard}
+              onDelete={setDeletingFlashcard}
+            />
 
-            <CreateCardButton />
+            <CreateCardButton onClick={() => setIsCreateModalOpen(true)} />
           </section>
         )}
       </main>
+
+      <CreateModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
+
+      <EditModal
+        flashcard={editingFlashcard}
+        onClose={() => setEditingFlashcard(null)}
+      />
+
+      <DeleteModal
+        flashcard={deletingFlashcard}
+        onClose={() => setDeletingFlashcard(null)}
+      />
     </div>
   );
 }

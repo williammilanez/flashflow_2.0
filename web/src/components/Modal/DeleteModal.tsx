@@ -1,10 +1,13 @@
+import type { Flashcard } from "../../types/flashcard";
+
 type DeleteModalProps = {
-  isOpen?: boolean;
-  onClose?: () => void;
+  flashcard: Flashcard | null;
+
+  onClose: () => void;
 };
 
-export function DeleteModal({ isOpen = false, onClose }: DeleteModalProps) {
-  if (!isOpen) {
+export function DeleteModal({ flashcard, onClose }: DeleteModalProps) {
+  if (!flashcard) {
     return null;
   }
 
