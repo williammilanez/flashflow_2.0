@@ -49,6 +49,11 @@ export function Home() {
 
   const hasFlashcards = flashcards.length > 0;
 
+  const filteredFlashcards =
+    selectedCategory === "Tudo"
+      ? flashcards
+      : flashcards.filter((card) => card.category === selectedCategory);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Header />
@@ -76,7 +81,7 @@ export function Home() {
         ) : (
           <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             <FlashcardGrid
-              flashcards={flashcards}
+              flashcards={filteredFlashcards}
               onEdit={setEditingFlashcard}
               onDelete={setDeletingFlashcard}
             />
