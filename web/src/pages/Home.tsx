@@ -27,13 +27,13 @@ export function Home() {
     {
       id: "4",
       category: "JavaScript",
-      question: "Por que o JavaScripté é uma linguagem de programação?",
+      question: "Por que o JavaScript é uma linguagem de programação?",
       answer: "Porque ele processa lógica e dados dinamicamente.",
     },
     {
       id: "5",
       category: "Tailwind CSS",
-      question: "Qual a principal utilidade do Tailwind CSS",
+      question: "Qual a principal utilidade do Tailwind CSS?",
       answer: "Estilização rápida via classes utilitárias.",
     },
   ];
