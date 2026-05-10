@@ -18,6 +18,7 @@ export function Header({ onCreate }: HeaderProps) {
         </div>
 
         <button
+          type="button"
           onClick={onCreate}
           className="font-manrope text-sm leading-5 bg-violet-700 text-white px-6 py-3 rounded-full font-bold hover:bg-violet-800 transition"
         >
