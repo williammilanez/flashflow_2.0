@@ -21,11 +21,8 @@ const categories: FlashcardCategory[] = [
 
 export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
   const [category, setCategory] = useState<FlashcardCategory | "">("");
-
   const [question, setQuestion] = useState("");
-
   const [answer, setAnswer] = useState("");
-
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   function resetForm() {

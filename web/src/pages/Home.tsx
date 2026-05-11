@@ -62,6 +62,14 @@ export function Home() {
     setFlashcards((prevState) => [newFlashcard, ...prevState]);
   }
 
+  function handleUpdateFlashcard(updatedFlashcard: Flashcard) {
+    setFlashcards((prevState) =>
+      prevState.map((flashcard) =>
+        flashcard.id === updatedFlashcard.id ? updatedFlashcard : flashcard,
+      ),
+    );
+  }
+
   if (isLoading) {
     return null;
   }
@@ -112,6 +120,7 @@ export function Home() {
       <EditModal
         flashcard={editingFlashcard}
         onClose={() => setEditingFlashcard(null)}
+        onUpdate={handleUpdateFlashcard}
       />
 
       <DeleteModal
