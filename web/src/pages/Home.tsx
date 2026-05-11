@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 
+import { flashcardService } from "../services/flashcard.service";
+import type { Flashcard } from "../types/flashcard";
+
 import { CategoryFilter } from "../components/CategoryFilter/CategoryFilter";
 import { CreateCardButton } from "../components/CreateCardButton/CreateCardButton";
 import { EmptyState } from "../components/EmptyState/EmptyState";
 import { FlashcardGrid } from "../components/FlashcardGrid/FlashcardGrid";
 import { Header } from "../components/Header/Header";
-
 import { CreateModal } from "../components/Modal/CreateModal";
 import { DeleteModal } from "../components/Modal/DeleteModal";
 import { EditModal } from "../components/Modal/EditModal";
-
-import { flashcardService } from "../services/flashcard.service";
-
-import type { Flashcard } from "../types/flashcard";
+import { FlashcardSkeleton } from "../components/Skeleton/FlashcardSkeleton";
 
 export function Home() {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
@@ -77,7 +76,27 @@ export function Home() {
   }
 
   if (isLoading) {
-    return null;
+    return (
+      <div className="min-h-screen bg-slate-50">
+        <Header onCreate={() => {}} />
+
+        <main className="max-w-7xl mx-auto px-6 py-12">
+          <section className="flex items-end justify-between gap-8">
+            <div className="flex flex-col gap-3">
+              <div className="h-4 w-40 rounded bg-slate-200 animate-pulse" />
+
+              <div className="h-10 w-96 rounded bg-slate-200 animate-pulse" />
+            </div>
+          </section>
+
+          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <FlashcardSkeleton key={index} />
+            ))}
+          </section>
+        </main>
+      </div>
+    );
   }
 
   return (
