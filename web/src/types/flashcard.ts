@@ -1,4 +1,8 @@
-export type FlashcardCategory = "JavaScript" | "React" | "Tailwind CSS";
+export type FlashcardCategory =
+  | "JavaScript"
+  | "React"
+  | "Tailwind CSS"
+  | "Node.js";
 
 export interface Flashcard {
   id: string;

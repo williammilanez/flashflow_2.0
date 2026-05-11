@@ -1,14 +1,72 @@
+import { useState } from "react";
+
+import { flashcardService } from "../../services/flashcard.service";
+
+import type { Flashcard, FlashcardCategory } from "../../types/flashcard";
+
 type CreateModalProps = {
-  isOpen?: boolean;
-  onClose?: () => void;
+  isOpen: boolean;
+
+  onClose: () => void;
+
+  onCreate: (flashcard: Flashcard) => void;
 };
 
-const categories = ["JavaScript", "React", "Tailwind CSS", "Node.js"];
+const categories: FlashcardCategory[] = [
+  "JavaScript",
+  "React",
+  "Tailwind CSS",
+  "Node.js",
+];
 
-export function CreateModal({ isOpen = false, onClose }: CreateModalProps) {
+export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
+  const [category, setCategory] = useState<FlashcardCategory | "">("");
+
+  const [question, setQuestion] = useState("");
+
+  const [answer, setAnswer] = useState("");
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  function resetForm() {
+    setCategory("");
+    setQuestion("");
+    setAnswer("");
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (!category) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      const createdFlashcard = await flashcardService.create({
+        category,
+        question,
+        answer,
+      });
+
+      onCreate(createdFlashcard);
+
+      resetForm();
+
+      onClose();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   if (!isOpen) {
     return null;
   }
+
+  const isFormInvalid = !category || !question.trim() || !answer.trim();
 
   return (
     <div className=" fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-6">
@@ -25,7 +83,7 @@ export function CreateModal({ isOpen = false, onClose }: CreateModalProps) {
           </div>
         </header>
 
-        <form className="mt-6 flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
           <div className="flex flex-col gap-2">
             <label className="font-inter text-xs font-bold text-slate-600 uppercase">
               Categoria
@@ -38,9 +96,14 @@ export function CreateModal({ isOpen = false, onClose }: CreateModalProps) {
                 className="absolute left-4 top-6 -translate-y-1/2 w-4 h-4 pointer-events-none"
               />
 
-              <select className="w-full h-12 appearance-none rounded-xl border border-slate-200 bg-white px-12 text-sm outline-none transition focus:border-violet-500">
-                <option>Selecione a categoria do card</option>
-
+              <select
+                value={category}
+                onChange={(event) =>
+                  setCategory(event.target.value as FlashcardCategory)
+                }
+                className="w-full h-12 appearance-none rounded-xl border border-slate-200 bg-white px-12 text-sm outline-none transition focus:border-violet-500"
+              >
+                <option value="">Selecione a categoria do card</option>
                 {categories.map((category) => (
                   <option key={category}>{category}</option>
                 ))}
@@ -67,6 +130,8 @@ export function CreateModal({ isOpen = false, onClose }: CreateModalProps) {
               />
 
               <textarea
+                value={question}
+                onChange={(event) => setQuestion(event.target.value)}
                 placeholder="Ex: O que é uma Closure no JavaScript?"
                 className="w-full font-inter text-sm min-h-[100px] resize-none rounded-2xl border border-slate-200 py-4 px-12 outline-none transition focus:border-violet-500"
               />
@@ -86,6 +151,8 @@ export function CreateModal({ isOpen = false, onClose }: CreateModalProps) {
               />
 
               <textarea
+                value={answer}
+                onChange={(event) => setAnswer(event.target.value)}
                 placeholder="Ex: Uma closure é a combinação de uma função com o ambiente léxico..."
                 className=" w-full font-inter text-sm min-h-[140px] resize-none rounded-2xl border border-slate-200 py-4 px-12 outline-none transition focus:border-violet-500"
               />
@@ -103,9 +170,10 @@ export function CreateModal({ isOpen = false, onClose }: CreateModalProps) {
 
             <button
               type="submit"
-              className="w-full rounded-full bg-violet-700 px-6 py-4 font-inter text-sm font-bold text-white hover:bg-violet-800 transition"
+              disabled={isSubmitting || isFormInvalid}
+              className="w-full rounded-full bg-violet-700 px-6 py-4 font-inter text-sm font-bold text-white hover:bg-violet-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Salvar
+              {isSubmitting ? "Salvando..." : "Salvar"}
             </button>
           </footer>
         </form>

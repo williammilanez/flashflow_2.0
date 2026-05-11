@@ -29,6 +29,8 @@ export function Home() {
     null,
   );
 
+  const [isLoading, setIsLoading] = useState(true);
+
   async function loadFlashcards() {
     try {
       const data = await flashcardService.getAll();
@@ -36,6 +38,8 @@ export function Home() {
       setFlashcards(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -53,6 +57,14 @@ export function Home() {
     selectedCategory === "Tudo"
       ? flashcards
       : flashcards.filter((card) => card.category === selectedCategory);
+
+  function handleCreateFlashcard(newFlashcard: Flashcard) {
+    setFlashcards((prevState) => [newFlashcard, ...prevState]);
+  }
+
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -94,6 +106,7 @@ export function Home() {
       <CreateModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
+        onCreate={handleCreateFlashcard}
       />
 
       <EditModal
