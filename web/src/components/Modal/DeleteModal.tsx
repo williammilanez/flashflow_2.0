@@ -1,12 +1,44 @@
+import { useState } from "react";
+
+import { flashcardService } from "../../services/flashcard.service";
+
 import type { Flashcard } from "../../types/flashcard";
 
 type DeleteModalProps = {
   flashcard: Flashcard | null;
 
   onClose: () => void;
+
+  onDelete: (flashcardId: string) => void;
 };
 
-export function DeleteModal({ flashcard, onClose }: DeleteModalProps) {
+export function DeleteModal({
+  flashcard,
+  onClose,
+  onDelete,
+}: DeleteModalProps) {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleDelete() {
+    if (!flashcard) {
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+
+      await flashcardService.delete(flashcard.id);
+
+      onDelete(flashcard.id);
+
+      onClose();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   if (!flashcard) {
     return null;
   }
@@ -42,9 +74,11 @@ export function DeleteModal({ flashcard, onClose }: DeleteModalProps) {
 
           <button
             type="button"
-            className="w-full rounded-full bg-red-700 px-6 py-4 font-inter text-sm font-bold text-white hover:bg-red-800 transition"
+            onClick={handleDelete}
+            disabled={isSubmitting}
+            className="w-full rounded-full bg-red-700 px-6 py-4 font-inter text-sm font-bold text-white hover:bg-red-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            Excluir
+            {isSubmitting ? "Excluindo..." : "Excluir"}
           </button>
         </footer>
       </div>

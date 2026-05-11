@@ -70,6 +70,12 @@ export function Home() {
     );
   }
 
+  function handleDeleteFlashcard(deletedFlashcardId: string) {
+    setFlashcards((prevState) =>
+      prevState.filter((flashcard) => flashcard.id !== deletedFlashcardId),
+    );
+  }
+
   if (isLoading) {
     return null;
   }
@@ -126,6 +132,7 @@ export function Home() {
       <DeleteModal
         flashcard={deletingFlashcard}
         onClose={() => setDeletingFlashcard(null)}
+        onDelete={handleDeleteFlashcard}
       />
     </div>
   );
