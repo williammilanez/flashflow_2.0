@@ -70,9 +70,9 @@ export function Home() {
     );
   }
 
-  function handleDeleteFlashcard(deletedFlashcardId: string) {
+  function handleDeleteFlashcard(flashcardId: string) {
     setFlashcards((prevState) =>
-      prevState.filter((flashcard) => flashcard.id !== deletedFlashcardId),
+      prevState.filter((flashcard) => flashcard.id !== flashcardId),
     );
   }
 
