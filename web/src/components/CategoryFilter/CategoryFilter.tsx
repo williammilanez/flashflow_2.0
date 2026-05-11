@@ -1,4 +1,6 @@
-const categories = ["Tudo", "JavaScript", "React", "Tailwind CSS", "Node.js"];
+import { FLASHCARD_CATEGORIES } from "../../constants/categories";
+
+const categories = ["Tudo", ...FLASHCARD_CATEGORIES];
 
 type CategoryFilterProps = {
   selectedCategory: string;

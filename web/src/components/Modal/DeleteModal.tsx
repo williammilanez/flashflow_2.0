@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { flashcardService } from "../../services/flashcard.service";
-
 import type { Flashcard } from "../../types/flashcard";
 
 type DeleteModalProps = {

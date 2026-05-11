@@ -1,7 +1,7 @@
 import { useState } from "react";
 
+import { FLASHCARD_CATEGORIES } from "../../constants/categories";
 import { flashcardService } from "../../services/flashcard.service";
-
 import type { Flashcard, FlashcardCategory } from "../../types/flashcard";
 
 type CreateModalProps = {
@@ -11,13 +11,6 @@ type CreateModalProps = {
 
   onCreate: (flashcard: Flashcard) => void;
 };
-
-const categories: FlashcardCategory[] = [
-  "JavaScript",
-  "React",
-  "Tailwind CSS",
-  "Node.js",
-];
 
 export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
   const [category, setCategory] = useState<FlashcardCategory | "">("");
@@ -101,7 +94,7 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
                 className="w-full h-12 appearance-none rounded-xl border border-slate-200 bg-white px-12 text-sm outline-none transition focus:border-violet-500"
               >
                 <option value="">Selecione a categoria do card</option>
-                {categories.map((category) => (
+                {FLASHCARD_CATEGORIES.map((category) => (
                   <option key={category}>{category}</option>
                 ))}
               </select>

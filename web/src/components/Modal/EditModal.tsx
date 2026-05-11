@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { FLASHCARD_CATEGORIES } from "../../constants/categories";
 import { flashcardService } from "../../services/flashcard.service";
-
 import type { Flashcard, FlashcardCategory } from "../../types/flashcard";
 
 type EditModalProps = {
@@ -11,13 +11,6 @@ type EditModalProps = {
 
   onUpdate: (flashcard: Flashcard) => void;
 };
-
-const categories: FlashcardCategory[] = [
-  "JavaScript",
-  "React",
-  "Tailwind CSS",
-  "Node.js",
-];
 
 export function EditModal({ flashcard, onClose, onUpdate }: EditModalProps) {
   const [formData, setFormData] = useState({
@@ -112,7 +105,7 @@ export function EditModal({ flashcard, onClose, onUpdate }: EditModalProps) {
               >
                 <option value="">Selecione a categoria do card</option>
 
-                {categories.map((category) => (
+                {FLASHCARD_CATEGORIES.map((category) => (
                   <option key={category}>{category}</option>
                 ))}
               </select>
