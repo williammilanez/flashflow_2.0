@@ -4,7 +4,7 @@ type EmptyStateProps = {
 
 export function EmptyState({ onCreate }: EmptyStateProps) {
   return (
-    <section className="mt-12 min-h-[420px] rounded-3xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-center px-6">
+    <section className="min-h-[420px] rounded-3xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-center px-6">
       <img
         src="/logo-pb.svg"
         alt="Nenhum flashcard encontrado"

@@ -15,88 +15,52 @@ import { FlashcardSkeleton } from "../components/Skeleton/FlashcardSkeleton";
 
 export function Home() {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
-
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
 
-  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(
     null,
   );
-
   const [deletingFlashcard, setDeletingFlashcard] = useState<Flashcard | null>(
     null,
   );
 
-  const [isLoading, setIsLoading] = useState(true);
-
-  async function loadFlashcards() {
-    try {
-      const data = await flashcardService.getAll();
-
-      setFlashcards(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   useEffect(() => {
-    async function fetchFlashcards() {
-      await loadFlashcards();
+    async function load() {
+      try {
+        const data = await flashcardService.getAll();
+        setFlashcards(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    fetchFlashcards();
+    load();
   }, []);
-
-  const hasFlashcards = flashcards.length > 0;
 
   const filteredFlashcards =
     selectedCategory === "Tudo"
       ? flashcards
       : flashcards.filter((card) => card.category === selectedCategory);
 
+  const hasFlashcards = filteredFlashcards.length > 0;
+
   function handleCreateFlashcard(newFlashcard: Flashcard) {
-    setFlashcards((prevState) => [newFlashcard, ...prevState]);
+    setFlashcards((prev) => [newFlashcard, ...prev]);
   }
 
-  function handleUpdateFlashcard(updatedFlashcard: Flashcard) {
-    setFlashcards((prevState) =>
-      prevState.map((flashcard) =>
-        flashcard.id === updatedFlashcard.id ? updatedFlashcard : flashcard,
-      ),
+  function handleUpdateFlashcard(updated: Flashcard) {
+    setFlashcards((prev) =>
+      prev.map((c) => (c.id === updated.id ? updated : c)),
     );
   }
 
-  function handleDeleteFlashcard(flashcardId: string) {
-    setFlashcards((prevState) =>
-      prevState.filter((flashcard) => flashcard.id !== flashcardId),
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50">
-        <Header onCreate={() => {}} />
-
-        <main className="max-w-7xl mx-auto px-6 py-12">
-          <section className="flex items-end justify-between gap-8">
-            <div className="flex flex-col gap-3">
-              <div className="h-4 w-40 rounded bg-slate-200 animate-pulse" />
-
-              <div className="h-10 w-96 rounded bg-slate-200 animate-pulse" />
-            </div>
-          </section>
-
-          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, index) => (
-              <FlashcardSkeleton key={index} />
-            ))}
-          </section>
-        </main>
-      </div>
-    );
+  function handleDeleteFlashcard(id: string) {
+    setFlashcards((prev) => prev.filter((c) => c.id !== id));
   }
 
   return (
@@ -104,6 +68,7 @@ export function Home() {
       <Header onCreate={() => setIsCreateModalOpen(true)} />
 
       <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* HEADER */}
         <section className="flex items-end justify-between gap-8">
           <div className="flex flex-col gap-3">
             <p className="font-inter text-xs font-bold text-violet-700 uppercase">
@@ -121,19 +86,30 @@ export function Home() {
           />
         </section>
 
-        {!hasFlashcards ? (
-          <EmptyState onCreate={() => setIsCreateModalOpen(true)} />
-        ) : (
-          <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            <FlashcardGrid
-              flashcards={filteredFlashcards}
-              onEdit={setEditingFlashcard}
-              onDelete={setDeletingFlashcard}
-            />
+        <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {isLoading &&
+            Array.from({ length: 6 }).map((_, index) => (
+              <FlashcardSkeleton key={index} />
+            ))}
 
-            <CreateCardButton onClick={() => setIsCreateModalOpen(true)} />
-          </section>
-        )}
+          {!isLoading && !hasFlashcards && (
+            <div className="col-span-full">
+              <EmptyState onCreate={() => setIsCreateModalOpen(true)} />
+            </div>
+          )}
+
+          {!isLoading && hasFlashcards && (
+            <>
+              <FlashcardGrid
+                flashcards={filteredFlashcards}
+                onEdit={setEditingFlashcard}
+                onDelete={setDeletingFlashcard}
+              />
+
+              <CreateCardButton onClick={() => setIsCreateModalOpen(true)} />
+            </>
+          )}
+        </section>
       </main>
 
       <CreateModal
