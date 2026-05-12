@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import { FLASHCARD_CATEGORIES } from "../../constants/categories";
 import { flashcardService } from "../../services/flashcard.service";
@@ -41,12 +42,15 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
       });
 
       onCreate(createdFlashcard);
+      toast.success("Flashcard criado com sucesso.");
 
       resetForm();
 
       onClose();
     } catch (error) {
       console.error(error);
+
+      toast.error("Erro ao criar flashcard.");
     } finally {
       setIsSubmitting(false);
     }

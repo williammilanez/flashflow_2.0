@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 import { flashcardService } from "../../services/flashcard.service";
 import type { Flashcard } from "../../types/flashcard";
@@ -29,10 +30,13 @@ export function DeleteModal({
       await flashcardService.delete(flashcard.id);
 
       onDelete(flashcard.id);
+      toast.success("Flashcard excluído com sucesso.");
 
       onClose();
     } catch (error) {
       console.error(error);
+
+      toast.error("Erro ao excluir flashcard.");
     } finally {
       setIsSubmitting(false);
     }

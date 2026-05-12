@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 import { FLASHCARD_CATEGORIES } from "../../constants/categories";
 import { flashcardService } from "../../services/flashcard.service";
@@ -49,10 +50,13 @@ export function EditModal({ flashcard, onClose, onUpdate }: EditModalProps) {
       });
 
       onUpdate(updatedFlashcard);
+      toast.success("Flashcard atualizado com sucesso.");
 
       onClose();
     } catch (error) {
       console.error(error);
+
+      toast.error("Erro ao atualizar flashcard.");
     } finally {
       setIsSubmitting(false);
     }
