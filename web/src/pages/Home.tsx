@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { flashcardService } from "../services/flashcard.service";
 import type { Flashcard } from "../types/flashcard";
 
 import { CategoryFilter } from "../components/CategoryFilter/CategoryFilter";
@@ -13,12 +12,10 @@ import { DeleteModal } from "../components/Modal/DeleteModal";
 import { EditModal } from "../components/Modal/EditModal";
 import { FlashcardSkeleton } from "../components/Skeleton/FlashcardSkeleton";
 
+import { useFlashcards } from "../hooks/useFlashcards";
+
 export function Home() {
-  const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("Tudo");
-
-  const [isLoading, setIsLoading] = useState(true);
-
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingFlashcard, setEditingFlashcard] = useState<Flashcard | null>(
     null,
@@ -26,21 +23,13 @@ export function Home() {
   const [deletingFlashcard, setDeletingFlashcard] = useState<Flashcard | null>(
     null,
   );
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const data = await flashcardService.getAll();
-        setFlashcards(data);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    load();
-  }, []);
+  const {
+    flashcards,
+    isLoading,
+    createFlashcard,
+    updateFlashcard,
+    deleteFlashcard,
+  } = useFlashcards();
 
   const filteredFlashcards =
     selectedCategory === "Tudo"
@@ -49,19 +38,9 @@ export function Home() {
 
   const hasFlashcards = filteredFlashcards.length > 0;
 
-  function handleCreateFlashcard(newFlashcard: Flashcard) {
-    setFlashcards((prev) => [newFlashcard, ...prev]);
-  }
-
-  function handleUpdateFlashcard(updated: Flashcard) {
-    setFlashcards((prev) =>
-      prev.map((c) => (c.id === updated.id ? updated : c)),
-    );
-  }
-
-  function handleDeleteFlashcard(id: string) {
-    setFlashcards((prev) => prev.filter((c) => c.id !== id));
-  }
+  const handleCreateFlashcard = createFlashcard;
+  const handleUpdateFlashcard = updateFlashcard;
+  const handleDeleteFlashcard = deleteFlashcard;
 
   return (
     <div className="min-h-screen bg-slate-50">
