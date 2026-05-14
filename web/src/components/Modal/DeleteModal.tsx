@@ -47,16 +47,16 @@ export function DeleteModal({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-6">
-      <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 py-6">
+      <div className="w-full max-w-md rounded-3xl bg-white p-5 shadow-xl sm:p-8">
         <div className="flex flex-col items-center text-center">
           <img
             src="/del.svg"
             alt="Excluir flashcard"
-            className="w-16 h-16 object-contain"
+            className="h-14 w-14 sm:h-16 sm:w-16 object-contain"
           />
 
-          <h2 className="mt-8 font-manrope text-2xl font-extrabold text-slate-800">
+          <h2 className="mt-8 font-manrope text-xl sm:text-2xl font-extrabold text-slate-800">
             Tem certeza que deseja excluir este card?
           </h2>
 
@@ -66,7 +66,7 @@ export function DeleteModal({
           </p>
         </div>
 
-        <footer className="mt-8 flex items-center justify-between gap-3">
+        <footer className="mt-8 flex flex-col gap-3 sm:flex-row">
           <button
             type="button"
             onClick={onClose}

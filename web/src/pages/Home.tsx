@@ -48,15 +48,15 @@ export function Home() {
     <div className="min-h-screen bg-slate-50">
       <Header onCreate={() => setIsCreateModalOpen(true)} />
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         {/* HEADER */}
-        <section className="flex items-end justify-between gap-8">
+        <section className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-3">
             <p className="font-inter text-xs font-bold text-violet-700 uppercase">
               Painel de Aprendizado
             </p>
 
-            <h2 className="font-manrope text-4xl font-extrabold text-slate-800">
+            <h2 className="font-manrope text-3xl leading-tight sm:text-4xl font-extrabold text-slate-800">
               Domine tecnologia com foco total.
             </h2>
           </div>
@@ -67,7 +67,7 @@ export function Home() {
           />
         </section>
 
-        <section className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <section className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {isLoading &&
             Array.from({ length: 6 }).map((_, index) => (
               <FlashcardSkeleton key={index} />

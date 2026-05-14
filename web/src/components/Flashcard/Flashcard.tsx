@@ -23,7 +23,7 @@ export function Flashcard({
   }
 
   return (
-    <article className="w-full min-h-[320px] rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col justify-between">
+    <article className="w-full min-h-[280px] sm:min-h-[320px] rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col justify-between">
       {!isFlipped ? (
         <>
           <header className="font-inter flex items-start justify-between">
@@ -33,7 +33,7 @@ export function Flashcard({
           </header>
 
           <div className="flex-1 flex items-center justify-center text-center">
-            <h3 className="font-manrope text-xl font-bold text-slate-800 leading-snug">
+            <h3 className="font-manrope break-words overflow-hidden text-xl font-bold leading-snug text-slate-800">
               {question}
             </h3>
           </div>
@@ -74,18 +74,18 @@ export function Flashcard({
             </div>
           </header>
 
-          <div className="flex flex-1 flex-col items-center justify-center text-center gap-6">
-            <h3 className="font-inter text-sm font-normal text-slate-600">
+          <div className="flex flex-1 flex-col items-center justify-center gap-6 overflow-hidden text-center">
+            <h3 className="font-inter break-words overflow-hidden text-sm font-normal text-slate-600">
               {question}
             </h3>
 
-            <p className="font-manrope text-base font-semibold leading-relaxed text-violet-700">
+            <p className="font-manrope break-words overflow-hidden text-base font-semibold leading-relaxed text-violet-700">
               {answer}
             </p>
           </div>
 
           <footer className="flex justify-end">
-            <button onClick={handleFlipCard}>
+            <button type="button" onClick={handleFlipCard}>
               <img
                 src="/Button-flip-card.svg"
                 alt="Virar card"

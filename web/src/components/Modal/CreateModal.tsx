@@ -63,11 +63,11 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
   const isFormInvalid = !category || !question.trim() || !answer.trim();
 
   return (
-    <div className=" fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-6">
-      <div className=" w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-8 shadow-xl">
-        <header className="flex items-start justify-between">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 py-6">
+      <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-5 shadow-xl sm:p-8">
+        <header className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex flex-col gap-2">
-            <h2 className="font-manrope text-2xl font-extrabold text-slate-800">
+            <h2 className="font-manrope text-xl sm:text-2xl font-extrabold text-slate-800">
               Criar Flashcard
             </h2>
 
@@ -77,7 +77,7 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
           </div>
         </header>
 
-        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label className="font-inter text-xs font-bold text-slate-600 uppercase">
               Categoria
@@ -95,7 +95,7 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
                 onChange={(event) =>
                   setCategory(event.target.value as FlashcardCategory)
                 }
-                className="w-full h-12 appearance-none rounded-xl border border-slate-200 bg-white px-12 text-sm outline-none transition focus:border-violet-500"
+                className="w-full h-12 appearance-none rounded-xl border border-slate-200 bg-white px-12 text-sm outline-none transition-colors duration-200 focus:border-violet-500"
               >
                 <option value="">Selecione a categoria do card</option>
                 {FLASHCARD_CATEGORIES.map((category) => (
@@ -127,7 +127,7 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
                 value={question}
                 onChange={(event) => setQuestion(event.target.value)}
                 placeholder="Ex: O que é uma Closure no JavaScript?"
-                className="w-full font-inter text-sm min-h-[100px] resize-none rounded-2xl border border-slate-200 py-4 px-12 outline-none transition focus:border-violet-500"
+                className="w-full font-inter text-sm min-h-[120px] resize-none rounded-2xl border border-slate-200 py-4 px-12 outline-none transition-colors duration-200 focus:border-violet-500"
               />
             </div>
           </div>
@@ -148,16 +148,16 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
                 value={answer}
                 onChange={(event) => setAnswer(event.target.value)}
                 placeholder="Ex: Uma closure é a combinação de uma função com o ambiente léxico..."
-                className=" w-full font-inter text-sm min-h-[140px] resize-none rounded-2xl border border-slate-200 py-4 px-12 outline-none transition focus:border-violet-500"
+                className=" w-full font-inter text-sm min-h-[160px] resize-none rounded-2xl border border-slate-200 py-4 px-12 outline-none transition-colors duration-200 focus:border-violet-500"
               />
             </div>
           </div>
 
-          <footer className="mt-2 flex items-center justify-between gap-3">
+          <footer className="mt-4 flex flex-col gap-3 sm:flex-row">
             <button
               type="button"
               onClick={onClose}
-              className="w-full rounded-full border border-slate-300 bg-slate-100 px-6 py-4 font-inter text-sm font-bold text-slate-700 hover:bg-slate-200 transition"
+              className="w-full rounded-full border border-slate-300 bg-slate-100 px-6 py-4 font-inter text-sm font-bold text-slate-700 transition-colors duration-200 hover:bg-slate-200"
             >
               Cancelar
             </button>
@@ -165,7 +165,7 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
             <button
               type="submit"
               disabled={isSubmitting || isFormInvalid}
-              className="w-full rounded-full bg-violet-700 px-6 py-4 font-inter text-sm font-bold text-white hover:bg-violet-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full rounded-full bg-violet-700 px-6 py-4 font-inter text-sm font-bold text-white transition-colors duration-200 hover:bg-violet-800 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isSubmitting ? "Salvando..." : "Salvar"}
             </button>

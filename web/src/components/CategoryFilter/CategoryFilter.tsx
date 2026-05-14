@@ -13,7 +13,7 @@ export function CategoryFilter({
   onSelectCategory,
 }: CategoryFilterProps) {
   return (
-    <section className="font-inter text-sm inline-flex flex-wrap items-center gap-3 bg-slate-100 rounded-full px-3 py-3">
+    <section className="font-inter flex w-full flex-wrap items-center gap-2 rounded-3xl bg-slate-100 p-3 text-sm lg:w-auto">
       {categories.map((category) => {
         const isActive = selectedCategory === category;
 
@@ -23,7 +23,7 @@ export function CategoryFilter({
             type="button"
             onClick={() => onSelectCategory(category)}
             className={`
-              px-5 py-2 rounded-full text-sm font-semibold transition
+              px-4 py-2 sm:px-5 rounded-full text-sm font-semibold transition
               ${
                 isActive
                   ? "font-semibold bg-violet-100 text-violet-700 border border-slate-200 hover:bg-violet-200"
