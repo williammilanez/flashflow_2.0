@@ -1,8 +1,13 @@
 type EmptyStateProps = {
   onCreate?: () => void;
+
+  message?: string;
 };
 
-export function EmptyState({ onCreate }: EmptyStateProps) {
+export function EmptyState({
+  onCreate,
+  message = "Você ainda não possui flashcards.",
+}: EmptyStateProps) {
   return (
     <section className="min-h-[420px] rounded-3xl border border-dashed border-slate-300 bg-white flex flex-col items-center justify-center text-center px-6">
       <img
@@ -13,7 +18,7 @@ export function EmptyState({ onCreate }: EmptyStateProps) {
 
       <div className="mt-8 flex flex-col gap-3">
         <p className="font-inter font-normal text-sm text-slate-500">
-          Você ainda não possui flashcards.
+          {message}
           <br />
           Que tal criar um para começar?
         </p>

@@ -36,7 +36,9 @@ export function Home() {
       ? flashcards
       : flashcards.filter((card) => card.category === selectedCategory);
 
-  const hasFlashcards = filteredFlashcards.length > 0;
+  const hasFlashcards = flashcards.length > 0;
+
+  const hasFilteredFlashcards = filteredFlashcards.length > 0;
 
   const handleCreateFlashcard = createFlashcard;
   const handleUpdateFlashcard = updateFlashcard;
@@ -77,7 +79,16 @@ export function Home() {
             </div>
           )}
 
-          {!isLoading && hasFlashcards && (
+          {!isLoading && hasFlashcards && !hasFilteredFlashcards && (
+            <div className="col-span-full">
+              <EmptyState
+                onCreate={() => setIsCreateModalOpen(true)}
+                message="Categoria sem flashcards."
+              />
+            </div>
+          )}
+
+          {!isLoading && hasFilteredFlashcards && (
             <>
               <FlashcardGrid
                 flashcards={filteredFlashcards}
