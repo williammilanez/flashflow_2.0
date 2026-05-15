@@ -6,7 +6,7 @@ export function Header({ onCreate }: HeaderProps) {
   return (
     <header className="w-full">
       <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center justify-center gap-2 md:justify-start">
           <img
             src="/logo.svg"
             alt="Logo Flash Flow"
@@ -20,7 +20,7 @@ export function Header({ onCreate }: HeaderProps) {
         <button
           type="button"
           onClick={onCreate}
-          className="flex w-full items-center justify-center rounded-full bg-violet-700 px-6 py-3 font-manrope text-sm font-bold leading-5 text-white transition hover:bg-violet-800 lg:w-auto"
+          className="flex w-full items-center justify-center rounded-full bg-violet-700 px-6 py-3 font-manrope text-sm font-bold leading-5 text-white transition hover:bg-violet-800 md:w-auto"
         >
           Novo Flashcard
         </button>

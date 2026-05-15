@@ -50,7 +50,7 @@ export function Home() {
 
       <main className="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
         {/* HEADER */}
-        <section className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <section className="flex flex-col gap-6 xl:flex-row xl:items-end xl:justify-between">
           <div className="flex flex-col gap-3">
             <p className="font-inter text-xs font-bold text-violet-700 uppercase">
               Painel de Aprendizado

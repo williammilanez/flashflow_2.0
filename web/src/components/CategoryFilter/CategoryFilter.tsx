@@ -13,7 +13,7 @@ export function CategoryFilter({
   onSelectCategory,
 }: CategoryFilterProps) {
   return (
-    <section className="font-inter flex w-full flex-wrap items-center gap-2 rounded-3xl bg-slate-100 p-3 text-sm lg:w-auto">
+    <section className="font-inter flex w-full flex-wrap items-center justify-center gap-2 rounded-3xl bg-slate-100 p-3 text-sm md:justify-start lg:w-auto">
       {categories.map((category) => {
         const isActive = selectedCategory === category;
 

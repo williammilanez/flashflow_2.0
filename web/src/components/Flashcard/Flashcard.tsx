@@ -33,7 +33,7 @@ export function Flashcard({
           </header>
 
           <div className="flex-1 flex items-center justify-center text-center">
-            <h3 className="font-manrope break-words overflow-hidden text-xl font-bold leading-snug text-slate-800">
+            <h3 className="font-manrope break-words whitespace-pre-wrap text-xl font-bold leading-snug text-slate-800">
               {question}
             </h3>
           </div>
@@ -75,11 +75,11 @@ export function Flashcard({
           </header>
 
           <div className="flex flex-1 flex-col items-center justify-center gap-6 overflow-hidden text-center">
-            <h3 className="font-inter break-words overflow-hidden text-sm font-normal text-slate-600">
+            <h3 className="font-inter break-words whitespace-pre-wrap text-sm font-normal text-slate-600">
               {question}
             </h3>
 
-            <p className="font-manrope break-words overflow-hidden text-base font-semibold leading-relaxed text-violet-700">
+            <p className="font-manrope break-words whitespace-pre-wrap text-base font-semibold leading-relaxed text-violet-700">
               {answer}
             </p>
           </div>
