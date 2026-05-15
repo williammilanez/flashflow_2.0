@@ -4,16 +4,16 @@ type CreateCardButtonProps = {
 
 export function CreateCardButton({ onClick }: CreateCardButtonProps) {
   return (
-    <article className="min-h-[280px] sm:min-h-[320px] rounded-3xl border-2 border-dashed border-slate-300 bg-violet-50 p-6 flex flex-col items-center justify-center text-center transition hover:border-violet-400 hover:bg-white">
+    <article className="min-h-[280px] sm:min-h-[320px] rounded-3xl border-2 border-dashed border-slate-300 bg-violet-50 p-5 sm:p-6 flex flex-col items-center justify-center text-center transition md:hover:border-violet-400 md:hover:bg-white">
       <button
         type="button"
         onClick={onClick}
-        className="hover:opacity-80 transition"
+        className="transition md:hover:opacity-80"
       >
         <img
           src="/Button-create-new-card.svg"
           alt="Criar novo flashcard"
-          className="w-16 h-16 object-contain"
+          className="w-14 h-14 sm:w-16 sm:h-16 object-contain"
         />
       </button>
 

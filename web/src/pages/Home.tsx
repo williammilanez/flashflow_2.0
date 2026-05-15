@@ -67,7 +67,7 @@ export function Home() {
           />
         </section>
 
-        <section className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <section className="mt-10 xl:mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
           {isLoading &&
             Array.from({ length: 6 }).map((_, index) => (
               <FlashcardSkeleton key={index} />

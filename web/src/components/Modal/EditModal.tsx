@@ -53,9 +53,7 @@ export function EditModal({ flashcard, onClose, onUpdate }: EditModalProps) {
       toast.success("Flashcard atualizado com sucesso.");
 
       onClose();
-    } catch (error) {
-      console.error(error);
-
+    } catch {
       toast.error("Erro ao atualizar flashcard.");
     } finally {
       setIsSubmitting(false);

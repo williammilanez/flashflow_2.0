@@ -20,7 +20,7 @@ export function Header({ onCreate }: HeaderProps) {
         <button
           type="button"
           onClick={onCreate}
-          className="flex w-full items-center justify-center rounded-full bg-violet-700 px-6 py-3 font-manrope text-sm font-bold leading-5 text-white transition hover:bg-violet-800 md:w-auto"
+          className="flex w-full items-center justify-center rounded-full bg-violet-700 px-6 py-3 font-manrope text-sm font-bold leading-5 text-white transition md:hover:bg-violet-800 md:w-auto"
         >
           Novo Flashcard
         </button>

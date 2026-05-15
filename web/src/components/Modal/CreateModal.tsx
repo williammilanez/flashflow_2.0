@@ -47,9 +47,7 @@ export function CreateModal({ isOpen, onClose, onCreate }: CreateModalProps) {
       resetForm();
 
       onClose();
-    } catch (error) {
-      console.error(error);
-
+    } catch {
       toast.error("Erro ao criar flashcard.");
     } finally {
       setIsSubmitting(false);

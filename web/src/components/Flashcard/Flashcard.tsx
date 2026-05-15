@@ -23,7 +23,7 @@ export function Flashcard({
   }
 
   return (
-    <article className="w-full min-h-[280px] sm:min-h-[320px] rounded-3xl border border-slate-200 bg-white p-6 shadow-sm flex flex-col justify-between">
+    <article className="w-full min-h-[280px] sm:min-h-[320px] xl:min-h-[340px] rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm flex flex-col justify-between">
       {!isFlipped ? (
         <>
           <header className="font-inter flex items-start justify-between">
@@ -43,7 +43,7 @@ export function Flashcard({
               <img
                 src="/Button-flip-card.svg"
                 alt="Virar card"
-                className="w-10 h-10 object-contain hover:opacity-80 transition"
+                className="w-10 h-10 object-contain transition md:hover:opacity-80"
               />
             </button>
           </footer>
@@ -60,7 +60,7 @@ export function Flashcard({
                 <img
                   src="/Button-edit.svg"
                   alt="Editar flashcard"
-                  className="w-10 h-10 object-contain hover:opacity-80 transition"
+                  className="w-10 h-10 object-contain transition md:hover:opacity-80"
                 />
               </button>
 
@@ -68,7 +68,7 @@ export function Flashcard({
                 <img
                   src="/Button-del.svg"
                   alt="Deletar flashcard"
-                  className="w-10 h-10 object-contain hover:opacity-80 transition"
+                  className="w-10 h-10 object-contain transition md:hover:opacity-80"
                 />
               </button>
             </div>
@@ -89,7 +89,7 @@ export function Flashcard({
               <img
                 src="/Button-flip-card.svg"
                 alt="Virar card"
-                className="w-10 h-10 object-contain hover:opacity-80 transition"
+                className="w-10 h-10 object-contain transition md:hover:opacity-80"
               />
             </button>
           </footer>
