@@ -6,6 +6,7 @@ type FlashcardGridProps = {
   onEdit: (card: FlashcardType) => void;
   onDelete: (card: FlashcardType) => void;
 };
+
 export function FlashcardGrid({
   flashcards,
   onEdit,
@@ -13,7 +14,6 @@ export function FlashcardGrid({
 }: FlashcardGridProps) {
   return (
     <>
-      {" "}
       {flashcards.map((flashcard) => (
         <Flashcard
           key={flashcard.id}
@@ -24,7 +24,7 @@ export function FlashcardGrid({
           onEdit={() => onEdit(flashcard)}
           onDelete={() => onDelete(flashcard)}
         />
-      ))}{" "}
+      ))}
     </>
   );
 }

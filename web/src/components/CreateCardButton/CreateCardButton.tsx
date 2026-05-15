@@ -4,7 +4,7 @@ type CreateCardButtonProps = {
 
 export function CreateCardButton({ onClick }: CreateCardButtonProps) {
   return (
-    <article className="min-h-[320px] rounded-3xl border-2 border-dashed border-slate-300 bg-violet-50 p-6 flex flex-col items-center justify-center text-center transition hover:border-violet-400 hover:bg-white">
+    <article className="min-h-[280px] sm:min-h-[320px] rounded-3xl border-2 border-dashed border-slate-300 bg-violet-50 p-6 flex flex-col items-center justify-center text-center transition hover:border-violet-400 hover:bg-white">
       <button
         type="button"
         onClick={onClick}
